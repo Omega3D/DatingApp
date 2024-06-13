@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
+ 
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -25,7 +25,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
- 
+
 app.MapControllers();
 
 app.Run();

@@ -1,8 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { error } from 'console';
-import { response } from 'express';
-import { observeOn } from 'rxjs';
+import { AccountService } from './_services/account.service';
+import { User } from './_models/user';
 
 @Component({
   selector: 'app-root',
@@ -10,16 +8,20 @@ import { observeOn } from 'rxjs';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  title = 'Hola';
-  users: any;
+  title = 'Dationg App';
 
-  constructor(private http: HttpClient) {}
+  constructor(private accountService: AccountService) {}
 
   ngOnInit(): void {
-    this.http.get('https://localhost:4002/api/users').subscribe({
-      next: response => this.users = response,
-      error: error => console.log(error),
-      complete: () => console.log('Request has been completed!')
-    })
+   this.setCurrentUser();
   }
+
+  setCurrentUser(){
+    const userStirng = localStorage.getItem('user');
+    if(!userStirng) return;
+    const user: User = JSON.parse(userStirng);
+    this.accountService.setCurrentUser(user);
+  }
+
+
 }
